@@ -2,7 +2,8 @@ import React from "react";
 import { Box } from "@/components/ui/box";
 import { tva } from "@gluestack-ui/nativewind-utils/tva";
 import { VariantProps } from "@gluestack-ui/nativewind-utils";
-import { ScrollView } from "react-native";
+import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const baseStyle = tva({
   base: "flex flex-col mt-20 mb-40",
@@ -20,15 +21,13 @@ export function Container({
   useScrollView,
   ...props
 }: ContainerProps) {
-  return useScrollView ? (
-    <ScrollView>
+  const size = useBottomTabBarHeight();
+
+  return (
+    <SafeAreaView style={{ marginBottom: size + 20 }}>
       <Box {...props} className={baseStyle({ class: className })}>
         {children}
       </Box>
-    </ScrollView>
-  ) : (
-    <Box {...props} className={baseStyle({ class: className })}>
-      {children}
-    </Box>
+    </SafeAreaView>
   );
 }

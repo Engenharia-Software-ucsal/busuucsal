@@ -15,7 +15,7 @@ import {
   parseWeekDay,
 } from "@/constants/busItinerary";
 import { FlatList } from "react-native";
-import { chain, map } from "lodash";
+import { chain, map, reduce } from "lodash";
 import { useEffect, useState } from "react";
 
 const getCurrentDateQuery = () =>
@@ -33,36 +33,36 @@ export default function HomeScreen() {
   const currentDayInWeek = parseWeekDay(localeDateWithTimezone.day());
   const currentItinerary = busItinerary[currentDayInWeek];
 
-  const formattedItinerary = map(currentItinerary, (item) => ({
-    departure: parseTime(item.departure),
-    arrival: parseTime(item.arrival),
-  }));
+  const nextDepartures = chain(currentItinerary)
+    .map((item) => {
+      const [hour, minute] = item.departure.split(":").map(Number);
+      return {
+        time: item,
+        queryDate: localeDateWithTimezone
+          .set("hours", hour)
+          .set("minutes", minute),
+      };
+    })
+    .filter(({ queryDate, time }) => queryDate.isAfter(localeDateWithTimezone))
+    .value();
 
-  const nextDeparture =
-    chain(currentItinerary)
-      .map("departure")
-      .map((item) => {
-        const [hour, minute] = item.split(":").map(Number);
-        return {
-          time: item,
-          queryDate: localeDateWithTimezone
-            .set("hours", hour)
-            .set("minutes", minute),
-        };
-      })
-      .filter(({ queryDate, time }) =>
-        queryDate.isAfter(localeDateWithTimezone),
-      )
-      .reduce((acc, item) => {
-        acc =
-          item.queryDate.diff(localeDateWithTimezone) <
-          acc.queryDate.diff(localeDateWithTimezone)
-            ? item
-            : acc;
+  const earlyNextDeparture = reduce(nextDepartures, (acc, item) => {
+    acc =
+      item.queryDate.diff(localeDateWithTimezone) <
+      acc.queryDate.diff(localeDateWithTimezone)
+        ? item
+        : acc;
 
-        return acc;
-      })
-      .value()?.time ?? "Sem horários";
+    return acc;
+  });
+
+  const parsedNextDepartures = chain(nextDepartures)
+    .tail()
+    .map((item) => ({
+      departure: parseTime(item.time.departure),
+      arrival: parseTime(item.time.arrival),
+    }))
+    .value();
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -75,7 +75,7 @@ export default function HomeScreen() {
   }, []);
 
   return (
-    <Container useScrollView>
+    <Container>
       <Box className="items-center">
         <Heading size="2xl" className="flex justify-center items-center">
           Ônibus UCSAL
@@ -86,7 +86,7 @@ export default function HomeScreen() {
         <Box className="mt-10 w-[250px] h-[250px] border border-blue-400 rounded-full">
           <VStack space="lg" className="justify-center items-center flex-1">
             <Text size="xl">Próxima saída</Text>
-            <Text size="4xl">{nextDeparture}</Text>
+            <Text size="4xl">{earlyNextDeparture?.time.departure}</Text>
           </VStack>
         </Box>
         <Heading size="xl" className="flex justify-center items-center mt-20 ">
@@ -102,12 +102,12 @@ export default function HomeScreen() {
 
               <VStack space="lg">
                 <FlatList
-                  style={{ maxHeight: 200 }}
-                  keyExtractor={(item, index) =>
-                    `${index}-${item.departure}-${item.arrival}`
+                  style={{ maxHeight: 200, paddingBottom: 20 }}
+                  keyExtractor={({ departure, arrival }, index) =>
+                    `${index}-${departure}-${arrival}`
                   }
                   showsVerticalScrollIndicator={false}
-                  data={formattedItinerary}
+                  data={parsedNextDepartures}
                   ItemSeparatorComponent={() => <Box className="mt-4" />}
                   renderItem={({ item }) => (
                     <Box className="flex-row justify-between">
