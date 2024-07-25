@@ -17,11 +17,14 @@ import {
 import { FlatList } from "react-native";
 import { chain, map } from "lodash";
 import { useEffect, useState } from "react";
+import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
 
 const getCurrentDateQuery = () =>
   dayjs().tz(defaultTimeZone, true).utc().locale(ptBrLocale);
 
 export default function HomeScreen() {
+  const tabBarHeight = useBottomTabBarHeight();
+
   const [localeDateWithTimezone, setLocaleDateWithTimezone] = useState(
     getCurrentDateQuery(),
   );
@@ -93,7 +96,11 @@ export default function HomeScreen() {
           Próximos horários
         </Heading>
         <Box className="w-full px-10 mt-10">
-          <Card size="lg" className="w-full">
+          <Card
+            size="lg"
+            className="w-full"
+            style={{ marginBottom: tabBarHeight + 20 }}
+          >
             <VStack space="2xl">
               <Box className="flex-row justify-between">
                 <Heading>Saida</Heading>
