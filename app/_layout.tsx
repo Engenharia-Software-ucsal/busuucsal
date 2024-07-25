@@ -9,9 +9,18 @@ import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
 import "react-native-reanimated";
 
+import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
+import timezone from "dayjs/plugin/timezone";
+import weekday from "dayjs/plugin/weekday";
+
 import { GluestackUIProvider } from "@/components/ui/gluestack-ui-provider";
 
 import "../global.css";
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
+dayjs.extend(weekday);
 
 void SplashScreen.preventAutoHideAsync();
 
