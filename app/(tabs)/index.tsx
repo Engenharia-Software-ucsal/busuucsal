@@ -17,14 +17,11 @@ import {
 import { FlatList } from "react-native";
 import { chain, map } from "lodash";
 import { useEffect, useState } from "react";
-import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
 
 const getCurrentDateQuery = () =>
   dayjs().tz(defaultTimeZone, true).utc().locale(ptBrLocale);
 
 export default function HomeScreen() {
-  const tabBarHeight = useBottomTabBarHeight();
-
   const [localeDateWithTimezone, setLocaleDateWithTimezone] = useState(
     getCurrentDateQuery(),
   );
@@ -78,7 +75,7 @@ export default function HomeScreen() {
   }, []);
 
   return (
-    <Container>
+    <Container useScrollView>
       <Box className="items-center">
         <Heading size="2xl" className="flex justify-center items-center">
           Ônibus UCSAL
@@ -95,20 +92,17 @@ export default function HomeScreen() {
         <Heading size="xl" className="flex justify-center items-center mt-20 ">
           Próximos horários
         </Heading>
-        <Box className="w-full px-10 mt-10">
-          <Card
-            size="lg"
-            className="w-full"
-            style={{ marginBottom: tabBarHeight + 20 }}
-          >
+        <Box className="w-full px-10 mt-10 mb-14">
+          <Card size="lg" className="w-full">
             <VStack space="2xl">
               <Box className="flex-row justify-between">
                 <Heading>Saida</Heading>
                 <Heading>Chegada</Heading>
               </Box>
 
-              <VStack space="lg" className="max-h-[200px]">
+              <VStack space="lg">
                 <FlatList
+                  style={{ maxHeight: 200 }}
                   keyExtractor={(item, index) =>
                     `${index}-${item.departure}-${item.arrival}`
                   }
