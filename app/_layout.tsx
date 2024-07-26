@@ -13,6 +13,7 @@ import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import timezone from "dayjs/plugin/timezone";
 import weekday from "dayjs/plugin/weekday";
+import { Provider as JotaiProvider } from "jotai";
 
 import { GluestackUIProvider } from "@/components/ui/gluestack-ui-provider";
 
@@ -44,10 +45,12 @@ export default function RootLayout() {
   return (
     <GluestackUIProvider mode={isDark ? "dark" : "light"}>
       <ThemeProvider value={isDark ? DarkTheme : DefaultTheme}>
-        <Stack>
-          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-          <Stack.Screen name="+not-found" />
-        </Stack>
+        <JotaiProvider>
+          <Stack>
+            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+            <Stack.Screen name="+not-found" />
+          </Stack>
+        </JotaiProvider>
       </ThemeProvider>
     </GluestackUIProvider>
   );
