@@ -10,7 +10,8 @@
     "web": "DARK_MODE=media expo start --web",
     "test": "jest --watchAll",
     "lint": "expo lint",
-    "postinstall": "patch-package"
+    "postinstall": "patch-package",
+    "make:apk": "eas build -p android --profile preview --local"
   },
   "jest": {
     "preset": "jest-expo"
