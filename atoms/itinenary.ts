@@ -15,12 +15,9 @@ const transformTimeStringToDate = (time: string, currentDate?: Date): Date => {
   return flow(setHours(hour), setMinutes(minute))(currentDate ?? new Date());
 };
 
-export const currentDateAtom = atom(
-  () => new Date(),
-  (_, __, value: Date) => {
-    return value;
-  },
-);
+export const currentDateAtom = atom(new Date(), (_, __, value: Date) => {
+  return value;
+});
 
 export const busItineraryAtom = atom(busItinerary);
 
@@ -42,13 +39,17 @@ export const nextDeparturesAtom = atom((get) => {
   });
 });
 
-export const earlyDepartureTimeAtom = atom<string>((get) => {
+export const earlyDepartureTimeAtom = atom<string | null>((get) => {
   const currentDate = get(currentDateAtom);
   const nextDepartures = get(nextDeparturesAtom);
 
   const departureTimesTransformedInDates = map(nextDepartures, (value) =>
     transformTimeStringToDate(value.departure, currentDate),
   );
+
+  if (!departureTimesTransformedInDates.length) {
+    return null;
+  }
 
   const earlyDate = min(departureTimesTransformedInDates);
 
