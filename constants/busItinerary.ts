@@ -73,17 +73,11 @@ export const busItinerary: Record<DaysOfWeekWithoutSunday, BusItinerary[]> = {
     { departure: "21:25", arrival: "21:50" },
   ],
   6: [
-    { departure: "6:30", arrival: "6:45" },
-    { departure: "7:00", arrival: "7:20" },
-    { departure: "9:00", arrival: "9:30" },
-    { departure: "9:55", arrival: "10:20" },
-    { departure: "10:45", arrival: "11:10" },
-    { departure: "11:35", arrival: "12:00" },
-    { departure: "12:25", arrival: "12:50" },
-    { departure: "17:10", arrival: "18:10" },
-    { departure: "18:30", arrival: "18:50" },
-    { departure: "20:10", arrival: "20:35" },
-    { departure: "21:25", arrival: "21:50" },
+    { departure: "6:40", arrival: "6:55" },
+    { departure: "8:30", arrival: "9:30" },
+    { departure: "9:30", arrival: "10:15" },
+    { departure: "13:00", arrival: "13:45" },
+    { departure: "12:30", arrival: "13:15" },
   ],
 };
 
