@@ -19,7 +19,7 @@ export function EarlyDepartureIndicator() {
       </Heading>
       <Box className="mt-10 w-[250px] h-[250px] border border-blue-400 rounded-full">
         <VStack space="lg" className="justify-center items-center flex-1">
-          <Text size="xl">Próxima saída</Text>
+          {earlyNextDeparture && <Text size="xl">Próxima saída</Text>}
           <Text size="4xl">{earlyNextDeparture ?? "Sem horários"}</Text>
         </VStack>
       </Box>
