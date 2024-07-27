@@ -7,18 +7,25 @@ import { FlatList } from "react-native";
 import { Text } from "@/components/ui/text";
 import { useAtomValue } from "jotai";
 import { nextDeparturesAtom } from "@/atoms/itinenary";
-import { chain } from "lodash";
+import { map, tail } from "lodash";
+
+function EmptyList() {
+  return (
+    <Box className="flex justify-center items-center w-full h-[100px]">
+      <Text>Nenhum horário disponível</Text>
+    </Box>
+  );
+}
 
 export function NextDeparturesList() {
   const nextDepartures = useAtomValue(nextDeparturesAtom);
 
-  const parsedNextDeparturesList = chain(nextDepartures)
-    .map((item) => ({
+  const parsedNextDeparturesList = tail(
+    map(nextDepartures, (item) => ({
       departure: item.departure.replace(/:/, "h"),
       arrival: item.arrival.replace(/:/, "h"),
-    }))
-    .tail()
-    .value();
+    })),
+  );
 
   return (
     <>
@@ -29,7 +36,7 @@ export function NextDeparturesList() {
         <Card size="lg" className="w-full max-h-[200px]">
           <VStack space="2xl">
             <Box className="flex-row justify-between">
-              <Heading>Saida</Heading>
+              <Heading>Saída</Heading>
               <Heading>Chegada</Heading>
             </Box>
 
@@ -46,6 +53,7 @@ export function NextDeparturesList() {
                   <Text>{item.arrival}</Text>
                 </Box>
               )}
+              ListEmptyComponent={<EmptyList />}
             />
           </VStack>
         </Card>
