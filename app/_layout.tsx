@@ -18,6 +18,7 @@ import { Provider as JotaiProvider } from "jotai";
 import { GluestackUIProvider } from "@/components/ui/gluestack-ui-provider";
 
 import "../global.css";
+import { AppLoading } from "@/components/app-loading";
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -39,7 +40,7 @@ export default function RootLayout() {
   }, [loaded]);
 
   if (!loaded) {
-    return null;
+    return <AppLoading />;
   }
 
   return (

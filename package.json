@@ -38,6 +38,7 @@
     "jotai": "^2.9.1",
     "jscodeshift": "0.15.2",
     "lodash": "^4.17.21",
+    "lottie-react-native": "^6.7.2",
     "nativewind": "4.0.36",
     "react": "18.2.0",
     "react-dom": "18.2.0",

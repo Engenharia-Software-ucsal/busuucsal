@@ -10,6 +10,7 @@ import { earlyDepartureTimeAtom, formattedDateAtom } from "@/atoms/itinenary";
 
 export function EarlyDepartureIndicator() {
   const todayTitle = useAtomValue(formattedDateAtom);
+
   const earlyNextDeparture = useAtomValue(earlyDepartureTimeAtom);
 
   return (
