@@ -1,5 +1,5 @@
 import { atom } from "jotai";
-import { format, getDay, isAfter } from "date-fns";
+import { format, formatDistance, getDay, isAfter } from "date-fns";
 import { min, setHours, setMinutes } from "date-fns/fp";
 import { ptBR } from "date-fns/locale";
 
@@ -39,7 +39,7 @@ export const nextDeparturesAtom = atom((get) => {
   });
 });
 
-export const earlyDepartureTimeAtom = atom<string | null>((get) => {
+export const earlyDepartureDateAtom = atom<Date | null>((get) => {
   const currentDate = get(currentDateAtom);
   const nextDepartures = get(nextDeparturesAtom);
 
@@ -51,9 +51,15 @@ export const earlyDepartureTimeAtom = atom<string | null>((get) => {
     return null;
   }
 
-  const earlyDate = min(departureTimesTransformedInDates);
+  return min(departureTimesTransformedInDates);
+});
 
-  return format(earlyDate, "HH:mm", { locale: ptBR });
+export const earlyDepartureTimeAtom = atom((get) => {
+  const earlyDepartureDate = get(earlyDepartureDateAtom);
+
+  return earlyDepartureDate
+    ? format(earlyDepartureDate, "HH:mm", { locale: ptBR })
+    : null;
 });
 
 export const formattedDateAtom = atom<string>((get) =>
@@ -62,3 +68,13 @@ export const formattedDateAtom = atom<string>((get) =>
     (c) => c.toUpperCase(),
   ),
 );
+
+export const distanceToNextDepartureAtom = atom((get) => {
+  const earlyDepartureDate = get(earlyDepartureDateAtom);
+
+  return earlyDepartureDate
+    ? formatDistance(earlyDepartureDate, get(currentDateAtom), {
+        locale: ptBR,
+      })
+    : "";
+});

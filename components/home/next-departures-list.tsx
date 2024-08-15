@@ -9,14 +9,6 @@ import { useAtomValue } from "jotai";
 import { nextDeparturesAtom } from "@/atoms/itinenary";
 import { map, tail } from "lodash";
 
-function EmptyList() {
-  return (
-    <Box className="flex justify-center items-center w-full h-[100px]">
-      <Text>Nenhum horário disponível</Text>
-    </Box>
-  );
-}
-
 export function NextDeparturesList() {
   const nextDepartures = useAtomValue(nextDeparturesAtom);
 
@@ -53,7 +45,11 @@ export function NextDeparturesList() {
                   <Text>{item.arrival}</Text>
                 </Box>
               )}
-              ListEmptyComponent={<EmptyList />}
+              ListEmptyComponent={() => (
+                <Box className="flex justify-center items-center w-full h-[100px]">
+                  <Text>Nenhum horário disponível</Text>
+                </Box>
+              )}
             />
           </VStack>
         </Card>

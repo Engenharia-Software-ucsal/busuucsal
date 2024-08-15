@@ -1,22 +1,25 @@
 import { Heading } from "@/components/ui/heading";
 import { Container } from "@/components/container";
 import { Box } from "@/components/ui/box";
-import { useEffect } from "react";
+import { useCallback } from "react";
 import { EarlyDepartureIndicator } from "@/components/home/early-departure-indicator";
 import { NextDeparturesList } from "@/components/home/next-departures-list";
 import { useSetAtom } from "jotai";
 import { currentDateAtom } from "@/atoms/itinenary";
+import { useFocusEffect } from "@react-navigation/core";
 
 export default function HomeScreen() {
   const updateCurrentDate = useSetAtom(currentDateAtom);
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      updateCurrentDate(new Date());
-    }, 5000);
+  useFocusEffect(
+    useCallback(() => {
+      const interval = setInterval(() => {
+        updateCurrentDate(new Date());
+      }, 5000);
 
-    return () => clearInterval(interval);
-  }, []);
+      return () => clearInterval(interval);
+    }, [updateCurrentDate]),
+  );
 
   return (
     <Container>
