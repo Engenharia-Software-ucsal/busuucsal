@@ -1,25 +1,16 @@
 import { atom } from "jotai";
-import { format, formatDistance, getDay, isAfter } from "date-fns";
+import { format, formatDistance, isAfter } from "date-fns";
 import { min } from "date-fns/fp";
 import { ptBR } from "date-fns/locale";
 
 import { busItinerary } from "@/constants/busItinerary";
 import { filter, map } from "lodash";
-import { DaysOfWeekWithoutSunday } from "@/constants/types";
 import { transformTimeStringToDate } from "@/constants/helpers";
-
-export const currentDateAtom = atom(new Date(), (_, __, value: Date) => {
-  return value;
-});
-
-export const busItineraryAtom = atom(busItinerary);
-
-export const currentDayAtom = atom(
-  (get) => getDay(get(currentDateAtom)) as DaysOfWeekWithoutSunday,
-);
+import { currentDateAtom, currentDayAtom } from "@/atoms/date";
+import { DaysOfWeekWithoutSunday } from "@/constants/types";
 
 export const currentItineraryAtom = atom((get) => {
-  return get(busItineraryAtom)[get(currentDayAtom)];
+  return busItinerary[get(currentDayAtom) as DaysOfWeekWithoutSunday];
 });
 
 export const nextDeparturesAtom = atom((get) => {
@@ -55,19 +46,13 @@ export const earlyDepartureTimeAtom = atom((get) => {
     : null;
 });
 
-export const formattedDateAtom = atom<string>((get) =>
-  format(get(currentDateAtom), "eeee, d 'de' MMMM", { locale: ptBR }).replace(
-    /^\w/,
-    (c) => c.toUpperCase(),
-  ),
-);
-
 export const distanceToNextDepartureAtom = atom((get) => {
   const earlyDepartureDate = get(earlyDepartureDateAtom);
 
   return earlyDepartureDate
     ? formatDistance(earlyDepartureDate, get(currentDateAtom), {
         locale: ptBR,
+        addSuffix: true,
       })
     : "";
 });

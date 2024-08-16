@@ -5,9 +5,10 @@ import { useCallback } from "react";
 import { EarlyDepartureIndicator } from "@/components/home/early-departure-indicator";
 import { NextDeparturesList } from "@/components/home/next-departures-list";
 import { useSetAtom } from "jotai";
-import { currentDateAtom } from "@/atoms/itinenary";
+
 import { useFocusEffect } from "@react-navigation/core";
-import { AlertButton } from "@/components/home/alert-button";
+
+import { currentDateAtom } from "@/atoms/date";
 
 export default function HomeScreen() {
   const updateCurrentDate = useSetAtom(currentDateAtom);
@@ -30,7 +31,6 @@ export default function HomeScreen() {
         </Heading>
         <EarlyDepartureIndicator />
         <NextDeparturesList />
-        <AlertButton />
       </Box>
     </Container>
   );

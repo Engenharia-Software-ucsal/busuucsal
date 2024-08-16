@@ -8,22 +8,28 @@ import { Text } from "@/components/ui/text";
 import { useAtomValue } from "jotai";
 import { nextDeparturesAtom } from "@/atoms/itinenary";
 import { map, tail } from "lodash";
+import { Icon } from "@/components/ui/icon";
+import { Clock } from "lucide-react-native";
+import { HStack } from "@/components/ui/hstack";
 
 export function NextDeparturesList() {
   const nextDepartures = useAtomValue(nextDeparturesAtom);
 
   const parsedNextDeparturesList = tail(
     map(nextDepartures, (item) => ({
-      departure: item.departure.replace(/:/, "h"),
-      arrival: item.arrival.replace(/:/, "h"),
+      departure: item.departure,
+      arrival: item.arrival,
     })),
   );
 
   return (
     <>
-      <Heading size="xl" className="flex justify-center items-center mt-20 ">
-        Próximos horários
-      </Heading>
+      <HStack className="mt-20 items-center" space="sm">
+        <Icon as={Clock} size="xl" />
+        <Heading size="xl" className="flex justify-center items-center  ">
+          Próximos horários
+        </Heading>
+      </HStack>
       <Box className="w-full px-10 mt-10 mb-14">
         <Card size="lg" className="w-full max-h-[200px]">
           <VStack space="2xl">

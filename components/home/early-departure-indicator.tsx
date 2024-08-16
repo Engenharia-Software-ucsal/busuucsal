@@ -9,8 +9,11 @@ import { useAtomValue } from "jotai";
 import {
   distanceToNextDepartureAtom,
   earlyDepartureTimeAtom,
-  formattedDateAtom,
 } from "@/atoms/itinenary";
+import { formattedDateAtom } from "@/atoms/date";
+import { HStack } from "@/components/ui/hstack";
+import { Icon } from "@/components/ui/icon";
+import { BusFront, Calendar } from "lucide-react-native";
 
 export function EarlyDepartureIndicator() {
   const todayTitle = useAtomValue(formattedDateAtom);
@@ -19,18 +22,26 @@ export function EarlyDepartureIndicator() {
 
   return (
     <>
-      <Heading size="xl" className="flex justify-center items-center mt-10">
-        {todayTitle}
-      </Heading>
+      <HStack className="items-center gap-2">
+        <Icon as={Calendar} size="md" />
+        <Heading size="xl" className="flex justify-center items-center">
+          {todayTitle}
+        </Heading>
+      </HStack>
+
       <Box className="mt-10 w-[250px] h-[250px] border border-blue-400 rounded-full">
         <VStack space="lg" className="justify-center items-center flex-1">
           {earlyNextDeparture && <Text size="xl">Próxima saída</Text>}
 
-          <Text size="4xl">{earlyNextDeparture ?? "Sem horários"}</Text>
+          <Text size="3xl">{earlyNextDeparture ?? "Sem horários"}</Text>
 
-          <Text>
-            Faltam <Text className="font-bold">{distanceToNextDeparture}</Text>
-          </Text>
+          <Icon as={BusFront} size={30 as any} />
+
+          {distanceToNextDeparture && (
+            <Text>
+              <Text className="font-bold">{distanceToNextDeparture}</Text>
+            </Text>
+          )}
         </VStack>
       </Box>
     </>

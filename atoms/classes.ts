@@ -1,18 +1,15 @@
 import { atom } from "jotai";
 import { ClassesInDay, classSchedule } from "@/constants/classes";
-import { getDay, isAfter } from "date-fns";
+import { isAfter } from "date-fns";
 import { DaysOfWeekWithoutSundayAndSaturday } from "@/constants/types";
 import { transformTimeStringToDate } from "@/constants/helpers";
 import { isEmpty, reduce } from "lodash";
-
-export const currentDateAtom = atom(new Date());
+import { currentDateAtom, currentDayAtom } from "@/atoms/date";
 
 export const currentClassRoomByDateAtom = atom<ClassesInDay | null>((get) => {
-  const currentDate = getDay(
-    get(currentDateAtom),
-  ) as DaysOfWeekWithoutSundayAndSaturday;
-
-  return classSchedule?.[currentDate] ?? null;
+  return classSchedule[
+    get(currentDayAtom) as DaysOfWeekWithoutSundayAndSaturday
+  ];
 });
 
 export const currentEarlyClassAtom = atom<{ room: string; date: string }>(
