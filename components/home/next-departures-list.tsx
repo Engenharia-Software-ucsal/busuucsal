@@ -17,8 +17,8 @@ export function NextDeparturesList() {
 
   const parsedNextDeparturesList = tail(
     map(nextDepartures, (item) => ({
-      departure: item.departure,
-      arrival: item.arrival,
+      departure: item.departure.concat(" h"),
+      arrival: item.arrival.concat(" h"),
     })),
   );
 
