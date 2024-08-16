@@ -53,9 +53,7 @@ export default function ClassesScreen() {
           <Box className="mt-10 w-[200px] h-[200px] border border-blue-400 rounded-full">
             <VStack space="md" className="justify-center items-center flex-1">
               <Text className="text-2xl">Sala</Text>
-              <Heading className="text-3xl tracking-wider">
-                {earlyClass?.room}
-              </Heading>
+              <Heading className="text-3xl ">{earlyClass?.room}</Heading>
               <Text className="text-xl ">{earlyClass?.date}</Text>
             </VStack>
           </Box>
