@@ -7,6 +7,7 @@ import { NextDeparturesList } from "@/components/home/next-departures-list";
 import { useSetAtom } from "jotai";
 import { currentDateAtom } from "@/atoms/itinenary";
 import { useFocusEffect } from "@react-navigation/core";
+import { AlertButton } from "@/components/home/alert-button";
 
 export default function HomeScreen() {
   const updateCurrentDate = useSetAtom(currentDateAtom);
@@ -27,9 +28,9 @@ export default function HomeScreen() {
         <Heading size="2xl" className="flex justify-center items-center">
           Ônibus UCSAL
         </Heading>
-
         <EarlyDepartureIndicator />
         <NextDeparturesList />
+        <AlertButton />
       </Box>
     </Container>
   );

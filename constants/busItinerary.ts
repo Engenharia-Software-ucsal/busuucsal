@@ -1,5 +1,4 @@
-export type DaysOfWeek = 0 | 1 | 2 | 3 | 4 | 5 | 6;
-export type DaysOfWeekWithoutSunday = 1 | 2 | 3 | 4 | 5 | 6;
+import { DaysOfWeek, DaysOfWeekWithoutSunday } from "@/constants/types";
 
 export type BusItinerary = {
   departure: string;
@@ -19,6 +18,7 @@ export const busItinerary: Record<DaysOfWeekWithoutSunday, BusItinerary[]> = {
     { departure: "18:30", arrival: "18:50" },
     { departure: "20:10", arrival: "20:35" },
     { departure: "21:25", arrival: "21:50" },
+    { departure: "21:50", arrival: "22:10" },
   ],
   2: [
     { departure: "6:30", arrival: "6:45" },
@@ -32,6 +32,7 @@ export const busItinerary: Record<DaysOfWeekWithoutSunday, BusItinerary[]> = {
     { departure: "18:30", arrival: "18:50" },
     { departure: "20:10", arrival: "20:35" },
     { departure: "21:25", arrival: "21:50" },
+    { departure: "21:50", arrival: "22:10" },
   ],
   3: [
     { departure: "6:30", arrival: "6:45" },
@@ -45,6 +46,7 @@ export const busItinerary: Record<DaysOfWeekWithoutSunday, BusItinerary[]> = {
     { departure: "18:30", arrival: "18:50" },
     { departure: "20:10", arrival: "20:35" },
     { departure: "21:25", arrival: "21:50" },
+    { departure: "21:50", arrival: "22:10" },
   ],
   4: [
     { departure: "6:30", arrival: "6:45" },
@@ -58,6 +60,7 @@ export const busItinerary: Record<DaysOfWeekWithoutSunday, BusItinerary[]> = {
     { departure: "18:30", arrival: "18:50" },
     { departure: "20:10", arrival: "20:35" },
     { departure: "21:25", arrival: "21:50" },
+    { departure: "21:50", arrival: "22:10" },
   ],
   5: [
     { departure: "6:30", arrival: "6:45" },
@@ -71,6 +74,7 @@ export const busItinerary: Record<DaysOfWeekWithoutSunday, BusItinerary[]> = {
     { departure: "18:30", arrival: "18:50" },
     { departure: "20:10", arrival: "20:35" },
     { departure: "21:25", arrival: "21:50" },
+    { departure: "21:50", arrival: "22:10" },
   ],
   6: [
     { departure: "6:40", arrival: "6:55" },

@@ -1,19 +1,12 @@
 import { atom } from "jotai";
 import { format, formatDistance, getDay, isAfter } from "date-fns";
-import { min, setHours, setMinutes } from "date-fns/fp";
+import { min } from "date-fns/fp";
 import { ptBR } from "date-fns/locale";
 
-import {
-  busItinerary,
-  DaysOfWeekWithoutSunday,
-} from "@/constants/busItinerary";
-import { filter, flow, map } from "lodash";
-
-const transformTimeStringToDate = (time: string, currentDate?: Date): Date => {
-  const [hour, minute] = time.split(":").map(Number);
-
-  return flow(setHours(hour), setMinutes(minute))(currentDate ?? new Date());
-};
+import { busItinerary } from "@/constants/busItinerary";
+import { filter, map } from "lodash";
+import { DaysOfWeekWithoutSunday } from "@/constants/types";
+import { transformTimeStringToDate } from "@/constants/helpers";
 
 export const currentDateAtom = atom(new Date(), (_, __, value: Date) => {
   return value;
