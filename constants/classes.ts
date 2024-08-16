@@ -95,7 +95,7 @@ export const classSchedule: Record<
     ],
   },
   5: {
-    dayOfWeek: 4,
+    dayOfWeek: 5,
     classes: [
       {
         teacher: "EVERTON MENDONCA DE JESUS",

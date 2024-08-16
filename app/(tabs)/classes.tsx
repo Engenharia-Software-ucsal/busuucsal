@@ -42,6 +42,8 @@ export default function ClassesScreen() {
 
   const earlyClass = useAtomValue(currentEarlyClassAtom);
 
+  const hasClasses = !!currentClassRoomToday?.classes?.length;
+
   return (
     <Container>
       <VStack space="lg">
@@ -52,33 +54,43 @@ export default function ClassesScreen() {
         <Center>
           <Box className="mt-10 w-[200px] h-[200px] border border-blue-400 rounded-full">
             <VStack space="md" className="justify-center items-center flex-1">
-              <Text className="text-2xl">Sala</Text>
-              <Heading className="text-3xl ">{earlyClass?.room}</Heading>
-              <Text className="text-xl ">{earlyClass?.date}</Text>
+              {earlyClass?.room ? (
+                <>
+                  <Text className="text-2xl">Sala</Text>
+                  <Heading className="text-3xl ">{earlyClass?.room}</Heading>
+                  <Text className="text-xl ">{earlyClass?.date}</Text>
+                </>
+              ) : (
+                <Heading>Sem aulas hoje</Heading>
+              )}
             </VStack>
           </Box>
         </Center>
 
         <VStack space="2xl" className="mt-10">
-          {currentClassRoomToday.classes.map((classRoom) => (
-            <Card
-              className="mx-2"
-              key={`${classRoom.startAt}-${classRoom.endAt}`}
-            >
-              <VStack space="md">
-                <Heading>{classRoom.name}</Heading>
+          {hasClasses &&
+            currentClassRoomToday?.classes.map((classRoom) => (
+              <Card
+                className="mx-2"
+                key={`${classRoom.startAt}-${classRoom.endAt}`}
+              >
+                <VStack space="md">
+                  <Heading>{classRoom.name}</Heading>
 
-                <TextWithLabel label={"Professor:"} value={classRoom.teacher} />
+                  <TextWithLabel
+                    label={"Professor:"}
+                    value={classRoom.teacher}
+                  />
 
-                <TextWithLabel
-                  label={"Horário:"}
-                  value={`${classRoom.startAt} - ${classRoom.endAt}`}
-                />
+                  <TextWithLabel
+                    label={"Horário:"}
+                    value={`${classRoom.startAt} - ${classRoom.endAt}`}
+                  />
 
-                <TextWithLabel label={"Sala:"} value={classRoom.room} />
-              </VStack>
-            </Card>
-          ))}
+                  <TextWithLabel label={"Sala:"} value={classRoom.room} />
+                </VStack>
+              </Card>
+            ))}
         </VStack>
       </VStack>
     </Container>

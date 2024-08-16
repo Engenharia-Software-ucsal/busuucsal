@@ -7,10 +7,12 @@ import { isEmpty, reduce } from "lodash";
 
 export const currentDateAtom = atom(new Date());
 
-export const currentClassRoomByDateAtom = atom<ClassesInDay>((get) => {
-  return classSchedule[
-    getDay(get(currentDateAtom)) as DaysOfWeekWithoutSundayAndSaturday
-  ];
+export const currentClassRoomByDateAtom = atom<ClassesInDay | null>((get) => {
+  const currentDate = getDay(
+    get(currentDateAtom),
+  ) as DaysOfWeekWithoutSundayAndSaturday;
+
+  return classSchedule?.[currentDate] ?? null;
 });
 
 export const currentEarlyClassAtom = atom<{ room: string; date: string }>(
@@ -19,7 +21,7 @@ export const currentEarlyClassAtom = atom<{ room: string; date: string }>(
     const currentDate = get(currentDateAtom);
 
     return reduce(
-      currentClassRoom.classes,
+      currentClassRoom?.classes,
       (acc, current) => {
         if (isEmpty(acc)) {
           acc = {
