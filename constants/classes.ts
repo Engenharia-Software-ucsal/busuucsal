@@ -1,6 +1,6 @@
 import { DaysOfWeekWithoutSundayAndSaturday } from "@/constants/types";
 
-type Class = {
+export type Class = {
   name: string;
   teacher: string;
   room: string;

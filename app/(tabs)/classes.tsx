@@ -5,7 +5,11 @@ import { Center } from "@/components/ui/center";
 import { Heading } from "@/components/ui/heading";
 import { VStack } from "@/components/ui/vstack";
 import { useAtomValue, useSetAtom } from "jotai";
-import { currentClassRoomByDate, currentDateAtom } from "@/atoms/classes";
+import {
+  currentClassRoomByDateAtom,
+  currentDateAtom,
+  currentEarlyClassAtom,
+} from "@/atoms/classes";
 import { useFocusEffect } from "@react-navigation/core";
 import React, { useCallback } from "react";
 import { HStack } from "@/components/ui/hstack";
@@ -26,7 +30,7 @@ function TextWithLabel({ label, value }: TextWithLabelProps) {
 }
 
 export default function ClassesScreen() {
-  const currentClassRoomToday = useAtomValue(currentClassRoomByDate);
+  const currentClassRoomToday = useAtomValue(currentClassRoomByDateAtom);
 
   const refreshDate = useSetAtom(currentDateAtom);
 
@@ -35,6 +39,8 @@ export default function ClassesScreen() {
       refreshDate(new Date());
     }, [refreshDate]),
   );
+
+  const earlyClass = useAtomValue(currentEarlyClassAtom);
 
   return (
     <Container>
@@ -46,10 +52,11 @@ export default function ClassesScreen() {
         <Center>
           <Box className="mt-10 w-[200px] h-[200px] border border-blue-400 rounded-full">
             <VStack space="md" className="justify-center items-center flex-1">
-              <Heading className="text-2xl">Sala de aula</Heading>
-              <Heading className="text-3xl">
-                {currentClassRoomToday.classes?.[0].room}
+              <Text className="text-2xl">Sala</Text>
+              <Heading className="text-3xl tracking-wider">
+                {earlyClass?.room}
               </Heading>
+              <Text className="text-xl ">{earlyClass?.date}</Text>
             </VStack>
           </Box>
         </Center>
