@@ -56,7 +56,10 @@ export default function ClassesScreen() {
 
         <VStack space="2xl" className="mt-10">
           {currentClassRoomToday.classes.map((classRoom) => (
-            <Card className="mx-2">
+            <Card
+              className="mx-2"
+              key={`${classRoom.startAt}-${classRoom.endAt}`}
+            >
               <VStack space="md">
                 <Heading>{classRoom.name}</Heading>
 
