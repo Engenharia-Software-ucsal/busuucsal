@@ -1,21 +1,24 @@
-import { Container } from "@/components/container";
-import { Text } from "@/components/ui/text";
-import { Card } from "@/components/ui/card";
-import { Center } from "@/components/ui/center";
-import { Heading } from "@/components/ui/heading";
-import { VStack } from "@/components/ui/vstack";
-import { useAtomValue, useSetAtom } from "jotai";
 import {
   currentClassRoomByDateAtom,
   currentEarlyClassAtom,
 } from "@/atoms/classes";
-import { useFocusEffect } from "@react-navigation/core";
-import React, { useCallback } from "react";
-import { HStack } from "@/components/ui/hstack";
-import { Box } from "@/components/ui/box";
 import { currentDateAtom, formattedDateAtom } from "@/atoms/date";
+import { Container } from "@/components/container";
+import { Box } from "@/components/ui/box";
+import { Card } from "@/components/ui/card";
+import { Center } from "@/components/ui/center";
+import { Heading } from "@/components/ui/heading";
+import { HStack } from "@/components/ui/hstack";
 import { Icon } from "@/components/ui/icon";
+import { Text } from "@/components/ui/text";
+import { VStack } from "@/components/ui/vstack";
+import { useFocusEffect } from "@react-navigation/core";
+import { useAtomValue, useSetAtom } from "jotai";
 import { Clock, DoorOpen, GraduationCap } from "lucide-react-native";
+import React, { useCallback } from "react";
+import { FlatList, ScrollView } from "react-native";
+
+
 
 interface TextWithLabelProps {
   label: string;
@@ -36,7 +39,6 @@ function TextWithLabel({ label, value, icon }: TextWithLabelProps) {
 export default function ClassesScreen() {
   const currentClassRoomToday = useAtomValue(currentClassRoomByDateAtom);
   const todayTitle = useAtomValue(formattedDateAtom);
-
   const refreshDate = useSetAtom(currentDateAtom);
 
   useFocusEffect(
@@ -47,10 +49,10 @@ export default function ClassesScreen() {
 
   const earlyClass = useAtomValue(currentEarlyClassAtom);
 
-  const hasClasses = !!currentClassRoomToday?.classes?.length;
-
+  
   return (
-    <Container>
+    <ScrollView>
+      <Container>
       <VStack space="lg">
         <Center>
           <Heading className="text-2xl">Aula(s) de hoje,</Heading>
@@ -80,9 +82,12 @@ export default function ClassesScreen() {
           </Box>
         </Center>
 
-        <VStack space="2xl" className="mt-10">
-          {hasClasses &&
-            currentClassRoomToday?.classes.map((classRoom) => (
+        
+        <FlatList
+                ItemSeparatorComponent={() => <Box className="my-2" />}
+                data={currentClassRoomToday?.classes}
+                keyExtractor={(classRoom) => `${classRoom.startAt}-${classRoom.endAt}`}
+                renderItem={({ item: classRoom }) => (
               <Card
                 className="mx-2"
                 key={`${classRoom.startAt}-${classRoom.endAt}`}
@@ -109,9 +114,11 @@ export default function ClassesScreen() {
                   />
                 </VStack>
               </Card>
-            ))}
-        </VStack>
+            )}
+            
+            />
       </VStack>
     </Container>
+    </ScrollView>
   );
 }

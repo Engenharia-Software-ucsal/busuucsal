@@ -1,6 +1,6 @@
-import { atom } from "jotai";
 import { format, getDay } from "date-fns";
 import { ptBR } from "date-fns/locale";
+import { atom } from "jotai";
 
 export const currentDateAtom = atom(new Date());
 

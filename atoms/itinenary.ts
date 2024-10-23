@@ -1,13 +1,13 @@
-import { atom } from "jotai";
 import { format, formatDistance, isAfter } from "date-fns";
 import { min } from "date-fns/fp";
 import { ptBR } from "date-fns/locale";
+import { atom } from "jotai";
 
-import { busItinerary } from "@/constants/busItinerary";
-import { filter, map } from "lodash";
-import { transformTimeStringToDate } from "@/constants/helpers";
 import { currentDateAtom, currentDayAtom } from "@/atoms/date";
+import { busItinerary } from "@/constants/busItinerary";
+import { transformTimeStringToDate } from "@/constants/helpers";
 import { DaysOfWeekWithoutSunday } from "@/constants/types";
+import { filter, map } from "lodash";
 
 export const currentItineraryAtom = atom((get) => {
   return busItinerary[get(currentDayAtom) as DaysOfWeekWithoutSunday];

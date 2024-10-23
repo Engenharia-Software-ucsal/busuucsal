@@ -1,10 +1,10 @@
-import { atom } from "jotai";
-import { ClassesInDay, classSchedule } from "@/constants/classes";
-import { isAfter } from "date-fns";
-import { DaysOfWeekWithoutSundayAndSaturday } from "@/constants/types";
-import { transformTimeStringToDate } from "@/constants/helpers";
-import { isEmpty, reduce } from "lodash";
 import { currentDateAtom, currentDayAtom } from "@/atoms/date";
+import { ClassesInDay, classSchedule } from "@/constants/classes";
+import { transformTimeStringToDate } from "@/constants/helpers";
+import { DaysOfWeekWithoutSundayAndSaturday } from "@/constants/types";
+import { isAfter } from "date-fns";
+import { atom } from "jotai";
+import { isEmpty, reduce } from "lodash";
 
 export const currentClassRoomByDateAtom = atom<ClassesInDay | null>((get) => {
   return classSchedule[

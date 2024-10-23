@@ -5,7 +5,6 @@ import {
 } from "@react-navigation/native";
 import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
-import { useState } from "react";
 import "react-native-reanimated";
 import { Provider as JotaiProvider } from "jotai";
 
@@ -19,14 +18,10 @@ export default function RootLayout() {
     SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
   });
 
-  const [animationIsFinished, setAnimationIsFinished] = useState(false);
-
   const isDark = true;
 
-  if (!loaded || !animationIsFinished) {
-    return (
-      <AppLoading onAnimationFinish={() => setAnimationIsFinished(true)} />
-    );
+  if (!loaded) {
+    return <AppLoading />;
   }
 
   return (
