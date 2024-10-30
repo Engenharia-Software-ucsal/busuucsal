@@ -38,7 +38,9 @@ function TextWithLabel({ label, value, icon }: TextWithLabelProps) {
 
 export default function ClassesScreen() {
   const currentClassRoomToday = useAtomValue(currentClassRoomByDateAtom);
+  
   const todayTitle = useAtomValue(formattedDateAtom);
+
   const refreshDate = useSetAtom(currentDateAtom);
 
   useFocusEffect(
