@@ -40,6 +40,21 @@ export default function TabLayout() {
           ),
         }}
       />
+
+
+  <Tabs.Screen
+        name="alerts"
+        options={{
+          title: "Alertas",
+          tabBarIcon: ({ color, focused }) => (
+            <TabBarIcon
+              name={focused ? "alert-circle" : "alert-circle-outline"}
+              color={color}
+            />
+          ),
+        }}
+      />
+
     </Tabs>
   );
 }
