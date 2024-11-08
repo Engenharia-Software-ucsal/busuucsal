@@ -4,6 +4,7 @@ import {
 } from "@/atoms/classes";
 import { currentDateAtom, formattedDateAtom } from "@/atoms/date";
 import { Container } from "@/components/container";
+import { TextWithLabel } from "@/components/text-with-label";
 import { Box } from "@/components/ui/box";
 import { Card } from "@/components/ui/card";
 import { Center } from "@/components/ui/center";
@@ -16,25 +17,7 @@ import { useFocusEffect } from "@react-navigation/core";
 import { useAtomValue, useSetAtom } from "jotai";
 import { Clock, DoorOpen, GraduationCap } from "lucide-react-native";
 import React, { useCallback } from "react";
-import { FlatList, ScrollView } from "react-native";
-
-
-
-interface TextWithLabelProps {
-  label: string;
-  value: string;
-  icon?: React.ReactNode;
-}
-
-function TextWithLabel({ label, value, icon }: TextWithLabelProps) {
-  return (
-    <HStack space="xs" className="items-center">
-      {icon}
-      <Text>{label}</Text>
-      <Text className="font-bold">{value}</Text>
-    </HStack>
-  );
-}
+import { FlatList } from "react-native";
 
 export default function ClassesScreen() {
   const currentClassRoomToday = useAtomValue(currentClassRoomByDateAtom);
@@ -51,9 +34,8 @@ export default function ClassesScreen() {
 
   const earlyClass = useAtomValue(currentEarlyClassAtom);
 
-  
+
   return (
-    <ScrollView>
       <Container>
       <VStack space="lg">
         <Center>
@@ -121,6 +103,6 @@ export default function ClassesScreen() {
             />
       </VStack>
     </Container>
-    </ScrollView>
+
   );
 }
